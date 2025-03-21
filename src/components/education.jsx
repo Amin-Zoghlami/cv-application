@@ -1,23 +1,15 @@
 import { useState } from "react";
-import Input from "./input.jsx";
-import Add from "./add.jsx";
 
 export default function Education() {
   const [editMode, setEditMode] = useState(true);
 
-  const [education, setEducation] = useState([
-    {
-      name: "",
-      field: "",
-      startDate: "",
-      endDate: "",
-    },
-  ]);
+  const [education, setEducation] = useState([]);
 
   function addEducation() {
     setEducation([
       ...education,
       {
+        id: Date.now(),
         name: "",
         field: "",
         startDate: "",
@@ -26,9 +18,13 @@ export default function Education() {
     ]);
   }
 
-  function handleInputChange(index, field, value) {
+  function deleteEducation(id) {
+    setEducation((prev) => prev.filter((item) => item.id !== id));
+  }
+
+  function handleInputChange(id, field, value) {
     setEducation((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, [field]: value } : item))
+      prev.map((item) => (item.id === id ? { ...item, [field]: value } : item))
     );
   }
 
@@ -41,14 +37,14 @@ export default function Education() {
       {editMode ? (
         <>
           <h1>Education</h1>
-          {education.map((school, index) => (
-            <div key={index}>
+          {education.map((school) => (
+            <div key={school.id}>
               <input
                 type="text"
                 placeholder="School Name"
                 value={school.name}
                 onChange={(e) =>
-                  handleInputChange(index, "name", e.target.value)
+                  handleInputChange(school.id, "name", e.target.value)
                 }
               />
               <input
@@ -56,7 +52,7 @@ export default function Education() {
                 placeholder="Field of Study"
                 value={school.field}
                 onChange={(e) =>
-                  handleInputChange(index, "field", e.target.value)
+                  handleInputChange(school.id, "field", e.target.value)
                 }
               />
               <input
@@ -64,7 +60,7 @@ export default function Education() {
                 placeholder="Start Date"
                 value={school.startDate}
                 onChange={(e) =>
-                  handleInputChange(index, "startDate", e.target.value)
+                  handleInputChange(school.id, "startDate", e.target.value)
                 }
               />
               <input
@@ -72,18 +68,21 @@ export default function Education() {
                 placeholder="End Date"
                 value={school.endDate}
                 onChange={(e) =>
-                  handleInputChange(index, "endDate", e.target.value)
+                  handleInputChange(school.id, "endDate", e.target.value)
                 }
               />
+              <button onClick={() => deleteEducation(school.id)}>Delete</button>
             </div>
           ))}
-          <button onClick={addEducation}>Add</button>
+          {education.length < 3 ? (
+            <button onClick={addEducation}>Add</button>
+          ) : null}
           <button onClick={switchEditMode}>Submit</button>
         </>
       ) : (
         <>
-          {education.map((school, index) => (
-            <div key={index}>
+          {education.map((school) => (
+            <div key={school.id}>
               <h2>{school.name}</h2>
               <h3>{school.field}</h3>
               <h4>{school.startDate}</h4>

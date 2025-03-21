@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Input from "./input.jsx";
 
 export default function Personal() {
   const [editMode, setEditMode] = useState(true);
@@ -25,7 +24,6 @@ export default function Personal() {
     <div className="personal">
       {editMode ? (
         <>
-          <h1>Personal/Contact</h1>
           <input
             type="text"
             placeholder="Full Name"
@@ -54,10 +52,10 @@ export default function Personal() {
         </>
       ) : (
         <>
-          <h2>{personal.name}</h2>
-          <h3>{personal.number}</h3>
-          <h4>{personal.email}</h4>
-          <h4>{personal.location}</h4>
+          <h1>{personal.name}</h1>
+          <h2>{personal.number}</h2>
+          <h2>| {personal.email} |</h2>
+          <h2>{personal.location}</h2>
           <button onClick={switchEditMode}>Edit</button>
         </>
       )}

@@ -1,34 +1,31 @@
 import { useState } from "react";
-import Input from "./input.jsx";
-import Add from "./add.jsx";
 
 export default function Work() {
   const [editMode, setEditMode] = useState(true);
 
-  const [work, setWork] = useState([
-    {
-      title: "",
-      company: "",
-      startDate: "",
-      endDate: "",
-    },
-  ]);
+  const [work, setWork] = useState([]);
 
   function addWork() {
     setWork([
       ...work,
       {
+        id: Date.now(),
         title: "",
         company: "",
         startDate: "",
         endDate: "",
+        desc: "",
       },
     ]);
   }
 
-  function handleInputChange(index, field, value) {
+  function deleteWork(id) {
+    setWork((prev) => prev.filter((item) => item.id !== id));
+  }
+
+  function handleInputChange(id, field, value) {
     setWork((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, [field]: value } : item))
+      prev.map((item) => (item.id === id ? { ...item, [field]: value } : item))
     );
   }
 
@@ -40,15 +37,15 @@ export default function Work() {
     <div className="work">
       {editMode ? (
         <>
-          <h1>Work/Experience</h1>
-          {work.map((job, index) => (
-            <div key={index}>
+          <h1>Experience</h1>
+          {work.map((job) => (
+            <div key={job.id}>
               <input
                 type="text"
                 placeholder="Job Title"
                 value={job.title}
                 onChange={(e) =>
-                  handleInputChange(index, "title", e.target.value)
+                  handleInputChange(job.id, "title", e.target.value)
                 }
               />
               <input
@@ -56,7 +53,7 @@ export default function Work() {
                 placeholder="Company"
                 value={job.company}
                 onChange={(e) =>
-                  handleInputChange(index, "company", e.target.value)
+                  handleInputChange(job.id, "company", e.target.value)
                 }
               />
               <input
@@ -64,7 +61,7 @@ export default function Work() {
                 placeholder="Start Date"
                 value={job.startDate}
                 onChange={(e) =>
-                  handleInputChange(index, "startDate", e.target.value)
+                  handleInputChange(job.id, "startDate", e.target.value)
                 }
               />
               <input
@@ -72,22 +69,31 @@ export default function Work() {
                 placeholder="End Date"
                 value={job.endDate}
                 onChange={(e) =>
-                  handleInputChange(index, "endDate", e.target.value)
+                  handleInputChange(job.id, "endDate", e.target.value)
                 }
               />
+              <textarea
+                placeholder="Description"
+                value={job.desc}
+                onChange={(e) =>
+                  handleInputChange(job.id, "desc", e.target.value)
+                }
+              />
+              <button onClick={() => deleteWork(job.id)}>Delete</button>
             </div>
           ))}
-          <button onClick={addWork}>Add</button>
+          {work.length < 3 ? <button onClick={addWork}>Add</button> : null}
           <button onClick={switchEditMode}>Submit</button>
         </>
       ) : (
         <>
-          {work.map((job, index) => (
-            <div key={index}>
+          {work.map((job) => (
+            <div key={job.id}>
               <h2>{job.title}</h2>
               <h3>{job.company}</h3>
               <h4>{job.startDate}</h4>
               <h4>{job.endDate}</h4>
+              <p>{job.desc}</p>
             </div>
           ))}
           <button onClick={switchEditMode}>Edit</button>

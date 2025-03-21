@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Input from "./input.jsx";
-import Add from "./add.jsx";
 
 export default function Skill() {
   const [skills, setSkills] = useState([

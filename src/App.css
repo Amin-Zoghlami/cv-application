@@ -1,3 +1,77 @@
 body {
+  background-color: oklch(0.205 0 0);
   font-family: "calibri", sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+
+.title {
+  color: white;
+  font-size: 40px;
+}
+
+.resume {
+  width: 900px;
+  background-color: white;
+  padding: 30px 100px;
+}
+
+svg {
+  height: 30px;
+}
+
+input,
+textarea {
+  background-color: oklch(0.928 0.006 264.531);
+  height: 30px;
+  width: 150px;
+  padding: 5px;
+  border: 0;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+button {
+  margin: 10px;
+}
+
+.heading {
+  border-bottom: 5px solid black;
+  margin-bottom: 15px;
+}
+
+h1,
+.contact,
+.school-input,
+.job-input-info {
+  display: flex;
+  gap: 10px;
+}
+
+.personal h1,
+.contact {
+  justify-content: center;
+}
+
+.school-output,
+.job-output {
+  margin-bottom: 50px;
+}
+
+.school-output,
+.job-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+textarea {
+  width: 720px;
+  height: 60px;
 }

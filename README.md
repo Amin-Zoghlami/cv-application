@@ -1,3 +1,3 @@
-# React + Vite
+#cv-application
 
 CV/Resume template built using React.
